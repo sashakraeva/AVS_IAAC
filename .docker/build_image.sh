@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo -e "Building iiaac_hull image"
+echo -e "Building iaac_hull image"
 
 DOCKER_BUILDKIT=1 \
 docker build --pull --rm -f ./.docker/Dockerfile \
