@@ -9,7 +9,7 @@ docker run -it --privileged \
     --group-add sudo \
     --env="DISPLAY" \
     --env="QT_X11_NO_MITSHM=1" \
-    --workdir="/dev_ws" \
+    --workdir="/hull_ws" \
     --volume="/home/$USER:/home/$USER" \
     --volume="/etc/group:/etc/group:ro" \
     --volume="/etc/passwd:/etc/passwd:ro" \

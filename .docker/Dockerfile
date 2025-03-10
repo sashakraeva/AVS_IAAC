@@ -60,8 +60,8 @@ RUN apt-get update && apt-get install -y \
 
 # Set up ROS workspace
 WORKDIR /
-RUN mkdir -p dev_ws/src
-WORKDIR /dev_ws/src
+RUN mkdir -p hull_ws/src
+WORKDIR /hull_ws/src
 
 # niceness permissions (for ur driver use without Prempt-RT)
 RUN echo "* - nice -15" >> /etc/security/limits.conf
@@ -70,9 +70,9 @@ RUN echo "* - nice -15" >> /etc/security/limits.conf
 FROM ros AS build
 
 # Ensure .docker files are copied
-COPY . /dev_ws/src/
+COPY . /hull_ws/src/
 
-WORKDIR /dev_ws
+WORKDIR /hull_ws
 
 # RUN chown -R sashanosense /usr/local/lib/python3.8/dist-packages/
 
@@ -83,8 +83,8 @@ RUN ["/bin/bash", "-c", "source /opt/ros/$ROS_DISTRO/setup.bash &&\
 
 FROM build AS bash
 
-RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/setup.bash /dev_ws/setup.bash && chmod 777 /dev_ws/setup.bash"]
-RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/entrypoint.bash / && chmod 777 /entrypoint.bash"]
+RUN ["/bin/bash", "-c", "cp /hull_ws/src/.docker/setup.bash /hull_ws/setup.bash && chmod 777 /hull_ws/setup.bash"]
+RUN ["/bin/bash", "-c", "cp /hull_ws/src/.docker/entrypoint.bash / && chmod 777 /entrypoint.bash"]
 ENTRYPOINT ["bash", "/entrypoint.bash" ]
 
 CMD ["bash"]
@@ -94,8 +94,8 @@ FROM build as dev
 
 SHELL ["zsh", "chsh -s ~/.zshrc" ]
 
-RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/setup.zsh /dev_ws/setup.zsh && chmod 777 /dev_ws/setup.zsh"]
-RUN ["/bin/bash", "-c", "cp /dev_ws/src/.docker/entrypoint.zsh / && chmod 777 /entrypoint.zsh"]
+RUN ["/bin/bash", "-c", "cp /hull_ws/src/.docker/setup.zsh /hull_ws/setup.zsh && chmod 777 /hull_ws/setup.zsh"]
+RUN ["/bin/bash", "-c", "cp /hull_ws/src/.docker/entrypoint.zsh / && chmod 777 /entrypoint.zsh"]
 
 ENTRYPOINT ["zsh", "/entrypoint.zsh" ]
 
